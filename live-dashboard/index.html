@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>CK-NEXUS · Live Activity</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1018;--panel:#111b28;--line:#263448;--muted:#8b9ab0;--text:#edf3fb;--green:#43d6a0;--amber:#f4bd57;--red:#ff7785;--blue:#83b7ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 75% -20%,#1b3550,transparent 45%),var(--bg);color:var(--text);font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{max-width:1440px;margin:auto;padding:28px clamp(15px,3vw,42px)}header{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:24px}.brand{color:var(--green);font-size:11px;font-weight:800;letter-spacing:2px}.eyebrow{color:var(--muted);font-size:10px;letter-spacing:1.8px;font-weight:700;margin-top:8px}h1{font-size:clamp(27px,4vw,42px);letter-spacing:-1.4px;line-height:1.1;margin:8px 0}h1 span{color:#8293aa;font-weight:450}.sub{color:var(--muted);margin:0}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.pill,button{border:1px solid var(--line);border-radius:9px;background:#142234;color:#dce8f8;padding:9px 12px;font-size:11px;font-weight:750}.pill{display:flex;gap:8px;align-items:center}.dot{width:7px;height:7px;border-radius:50%;background:#728198}.dot.live{background:var(--green);box-shadow:0 0 12px #43d6a055}.dot.warn{background:var(--amber)}button{cursor:pointer}button:hover{background:#20344b}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:16px}.card,.panel{border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,#121e2c,#0f1823)}.card{padding:17px}.label{font-size:10px;letter-spacing:1px;color:var(--muted);font-weight:800}.value{font-size:31px;font-weight:800;letter-spacing:-1px;margin:9px 0 4px}.hint{font-size:11px;color:var(--muted)}.panel{padding:19px;margin-bottom:16px}.panelhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:15px}.kicker{font-size:9px;color:#7d93ad;letter-spacing:1.6px;font-weight:800}h2{font-size:17px;margin:4px 0 0}.panelnote{font-size:11px;color:var(--muted);margin:3px 0 0}.rows{display:grid;gap:9px}.run,.event{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px;border:1px solid #243448;border-radius:9px;background:#121e2c}.runname,.eventtitle{font-size:12px;font-weight:750;overflow-wrap:anywhere}.meta{font-size:10px;color:var(--muted);margin-top:4px}.badge{font-size:9px;font-weight:850;letter-spacing:.7px;border-radius:6px;padding:5px 7px;white-space:nowrap;background:#273243;color:#b7c3d3}.success{background:#14382b;color:var(--green)}.failure{background:#40232c;color:var(--red)}.progress{background:#3b301a;color:var(--amber)}.link{color:#a6caff;text-decoration:none}.link:hover{text-decoration:underline}.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}.empty{color:var(--muted);font-size:12px;padding:20px;text-align:center;border:1px dashed #2a3a4d;border-radius:9px}.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:#6f8097;font-size:10px;padding:8px 2px}.warning{display:none;padding:12px 14px;border:1px solid #594726;background:#2a2217;color:#f4dca8;border-radius:9px;margin-bottom:15px;font-size:11px}.warning.show{display:block}.activitylist{display:grid;gap:8px;max-height:490px;overflow:auto}.timestamp{font-size:10px;color:var(--muted);white-space:nowrap}.spinner{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--amber);animation:pulse 1s infinite}@keyframes pulse{50%{opacity:.3}}@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.two{grid-template-columns:1fr}}@media(max-width:600px){.wrap{padding:20px 12px}header{display:block}.actions{margin-top:15px}.grid{gap:8px}.card{padding:13px}.value{font-size:27px}.panel{padding:13px}.run,.event{grid-template-columns:minmax(0,1fr)}.badge{justify-self:start}.foot{line-height:1.8}}
+</style>
+</head>
+<body><main class="wrap">
+<header><div><div class="brand">CK-NEXUS / OPERATIONS</div><div class="eyebrow">GITHUB · OPENCODE · LIVE ACTIVITY</div><h1>Live activity <span>monitor</span></h1><p class="sub">ติดตาม workflow, issue และเหตุการณ์ล่าสุดจาก GitHub แบบอัปเดตอัตโนมัติ</p></div><div class="actions"><div class="pill"><span id="dot" class="dot warn"></span><span id="connection">กำลังเชื่อมต่อ</span></div><button id="refresh">↻ รีเฟรช</button></div></header>
+<div id="warning" class="warning"></div>
+<section class="grid">
+<div class="card"><div class="label">LATEST WORKFLOW</div><div id="workflowValue" class="value">—</div><div id="workflowHint" class="hint">กำลังอ่าน GitHub Actions</div></div>
+<div class="card"><div class="label">OPEN ISSUE #3</div><div id="issueValue" class="value">—</div><div id="issueHint" class="hint">CK-NEXUS AI Stack</div></div>
+<div class="card"><div class="label">RECENT RUNS</div><div id="runValue" class="value">—</div><div class="hint">GitHub Actions · last 10</div></div>
+<div class="card"><div class="label">LAST UPDATED</div><div id="updatedValue" class="value" style="font-size:22px">—</div><div id="updatedHint" class="hint">Refresh every 15 seconds</div></div>
+</section>
+<div id="demoWarning" class="warning show">ข้อมูลนี้เป็นกิจกรรม GitHub จริงที่อ่านได้จาก API สาธารณะ ไม่ใช่ telemetry จาก VPS หรือ n8n โดยตรง หากต้องการ health ของบริการจริง ต้องเชื่อม health endpoint เพิ่มภายหลัง</div>
+<section class="panel"><div class="panelhead"><div><div class="kicker">EXECUTION MONITOR</div><h2>GitHub Actions / OpenCode</h2><p class="panelnote">สถานะ run ล่าสุดพร้อมลิงก์เปิดดูรายละเอียดจริง</p></div><a class="link" href="https://github.com/spinlnw10-art/PlayGround/actions" target="_blank" rel="noopener noreferrer">เปิด Actions ↗</a></div><div id="runs" class="rows"><div class="empty">กำลังโหลด workflow runs…</div></div></section>
+<div class="two">
+<section class="panel"><div class="panelhead"><div><div class="kicker">TASK TRACKING</div><h2>Issue #3</h2><p class="panelnote">CK-NEXUS AI Stack — Consolidated &amp; Organized</p></div><a class="link" href="https://github.com/spinlnw10-art/PlayGround/issues/3" target="_blank" rel="noopener noreferrer">เปิด Issue ↗</a></div><div id="issueDetail" class="rows"><div class="empty">กำลังโหลด issue…</div></div></section>
+<section class="panel"><div class="panelhead"><div><div class="kicker">ACTIVITY STREAM</div><h2>Recent events</h2><p class="panelnote">Issue comments และ workflow runs</p></div><span class="badge" id="eventBadge">POLLING</span></div><div id="events" class="activitylist"><div class="empty">กำลังโหลดเหตุการณ์…</div></div></section>
+</div>
+<footer class="foot"><span>READ-ONLY · PUBLIC GITHUB API · NO TOKENS IN BROWSER</span><span id="footerStatus">ยังไม่ได้ตรวจสอบ</span><span>DESIGNED ≠ EXECUTED ≠ VERIFIED ≠ PRODUCTION</span></footer>
+</main>
+<script>
+(function(){
+"use strict";
+const OWNER="spinlnw10-art",REPO="PlayGround",ISSUE=3,BASE="https://api.github.com/repos/"+OWNER+"/"+REPO;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=s=>{if(!s)return "—";const d=new Date(s);return isNaN(d.getTime())?"—":d.toLocaleString(undefined,{month:"short",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"});};
+const ago=s=>{if(!s)return "เวลาไม่ระบุ";const sec=Math.max(0,Math.floor((Date.now()-new Date(s).getTime())/1000));return sec<60?sec+" วินาทีที่แล้ว":sec<3600?Math.floor(sec/60)+" นาทีที่แล้ว":Math.floor(sec/3600)+" ชั่วโมงที่แล้ว";};
+const statusClass=(s,c)=>{if(s==="success"||s==="completed"&&c==="success"||s==="open")return "success";if(s==="failure"||s==="cancelled"||s==="closed"||s==="timed_out"||s==="completed"&&c!=="success"&&c)return "failure";if(s==="in_progress"||s==="queued"||s==="requested"||s==="pending")return "progress";return "";};
+const statusText=(s,c)=>{if(s==="completed")return c==="success"?"สำเร็จ":"จบแล้ว: "+(c||"ไม่ทราบ");return ({in_progress:"กำลังทำงาน",queued:"รอคิว",requested:"ร้องขอ",pending:"รอดำเนินการ",success:"สำเร็จ",failure:"ล้มเหลว",cancelled:"ยกเลิก",timed_out:"หมดเวลา",open:"เปิดอยู่",closed:"ปิดแล้ว"})[s]||s||"ไม่ทราบ";};
+async function get(path){const r=await fetch(BASE+path,{headers:{Accept:"application/vnd.github+json"},cache:"no-store"});if(!r.ok){const e=new Error("GitHub API HTTP "+r.status);e.status=r.status;throw e;}return r.json();}
+function empty(text){return '<div class="empty">'+esc(text)+'</div>';}
+function runHtml(run){const s=run.status==="completed"?run.conclusion:run.status;return '<article class="run"><div><div class="runname">'+esc(run.name||run.display_title||"Workflow run")+'</div><div class="meta">#'+esc(run.run_number)+' · '+esc(run.event||"event")+' · '+esc(ago(run.updated_at||run.created_at))+' · '+esc(run.head_branch||"branch ไม่ระบุ")+'</div></div><div><span class="badge '+statusClass(run.status,run.conclusion)+'">'+esc(statusText(run.status,run.conclusion))+'</span><div class="meta" style="text-align:right"><a class="link" href="'+esc(run.html_url)+'" target="_blank" rel="noopener noreferrer">รายละเอียด ↗</a></div></div></article>';}
+function eventHtml(item){const title=item.title||item.name||item.commit&&item.commit.message||item.message||item.workflow_name||"GitHub event";const actor=item.actor&&item.actor.login||item.user&&item.user.login||"GitHub";const when=item.updated_at||item.created_at||item.run_started_at;const url=item.html_url||item.run_url||"https://github.com/"+OWNER+"/"+REPO+"/actions";return '<article class="event"><div><div class="eventtitle"><a class="link" href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(title)+'</a></div><div class="meta">'+esc(actor)+' · '+esc(ago(when))+'</div></div><span class="timestamp">'+esc(fmt(when))+'</span></article>';}
+async function loadAll(){
+$("refresh").disabled=true;
+let errors=[];
+const tasks=await Promise.allSettled([
+get("/actions/runs?per_page=10"),
+get("/issues/"+ISSUE),
+get("/issues/"+ISSUE+"/comments?per_page=10"),
+get("/issues/"+ISSUE+"/events?per_page=10")
+]);
+const runs=tasks[0].status==="fulfilled"?tasks[0].value.workflow_runs||[]:(errors.push("Actions: "+tasks[0].reason.message),[]);
+const issue=tasks[1].status==="fulfilled"?tasks[1].value:(errors.push("Issue: "+tasks[1].reason.message),null);
+const comments=tasks[2].status==="fulfilled"?tasks[2].value:(errors.push("Comments: "+tasks[2].reason.message),[]);
+const issueEvents=tasks[3].status==="fulfilled"?tasks[3].value:(errors.push("Events: "+tasks[3].reason.message),[]);
+$("workflowValue").textContent=runs.length?statusText(runs[0].status,runs[0].conclusion):"ไม่มี";
+$("workflowHint").textContent=runs[0]?(runs[0].name||"Workflow")+" · "+ago(runs[0].updated_at||runs[0].created_at):"ยังไม่พบ workflow run";
+$("issueValue").textContent=issue?statusText(issue.state):"—";
+$("issueHint").textContent=issue?"#"+issue.number+" · อัปเดต "+ago(issue.updated_at):"อ่านข้อมูล issue ไม่ได้";
+$("runValue").textContent=String(runs.length);
+$("updatedValue").textContent=new Date().toLocaleTimeString(undefined,{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+$("updatedHint").textContent="รอบตรวจ "+fmt(new Date().toISOString());
+$("runs").innerHTML=runs.length?runs.map(runHtml).join(""):empty("ยังไม่มี workflow runs หรือ API อ่านไม่ได้");
+$("issueDetail").innerHTML=issue?'<article class="run"><div><div class="runname">'+esc(issue.title)+'</div><div class="meta">เปิดโดย '+esc(issue.user&&issue.user.login||"ไม่ทราบ")+' · '+esc(ago(issue.created_at))+'</div></div><span class="badge '+statusClass(issue.state)+'">'+esc(statusText(issue.state))+'</span></article><article class="run"><div><div class="runname">ความคิดเห็น</div><div class="meta">Comments ที่อ่านได้จาก API</div></div><span class="badge">'+comments.length+'</span></article><article class="run"><div><div class="runname">Issue events</div><div class="meta">การเปลี่ยนแปลงและกิจกรรม</div></div><span class="badge">'+issueEvents.length+'</span></article>':empty("อ่าน Issue ไม่สำเร็จ");
+const merged=comments.map(x=>Object.assign({kind:"comment"},x)).concat(issueEvents.map(x=>Object.assign({kind:"issue event"},x))).concat(runs.map(x=>Object.assign({kind:"workflow"},x)));
+merged.sort((a,b)=>new Date(b.updated_at||b.created_at||b.run_started_at||0)-new Date(a.updated_at||a.created_at||a.run_started_at||0));
+$("events").innerHTML=merged.length?merged.slice(0,12).map(eventHtml).join(""):empty("ยังไม่มีเหตุการณ์");
+const failed=errors.length>0;
+$("connection").textContent=failed?(errors.some(x=>x.includes("403")||x.includes("429"))?"API rate limit":"Partial data"):"Connected · GitHub API";
+$("dot").className="dot "+(failed?"warn":"live");
+$("eventBadge").textContent=failed?"PARTIAL":"LIVE POLL";
+$("warning").className="warning "+(failed?"show":"");
+$("warning").textContent=failed?"บางข้อมูลโหลดไม่สำเร็จ: "+errors.join(" | ")+". GitHub API อาจจำกัดอัตราการเรียก; dashboard จะลองใหม่อัตโนมัติ.":"";
+$("footerStatus").textContent="ตรวจล่าสุด "+fmt(new Date().toISOString())+" · refresh 15s";
+$("refresh").disabled=false;
+}
+$("refresh").addEventListener("click",loadAll);
+loadAll();
+setInterval(loadAll,15000);
+})();
+</script>
+</body>
+</html>
