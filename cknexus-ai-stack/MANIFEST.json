@@ -1,0 +1,1 @@
+{"components":{"clients":["cli-chat","continue.dev"],"providers":["gemini","groq","ollama"],"rag":["qdrant","nomic-embed-text"],"services":["n8n","ollama","qdrant"],"workflows":["free-ai-assistant","multi-agent","ticket-triage"]},"created":"2026-10-12","name":"cknexus-ai-stack","ports":{"n8n":5678,"ollama":11434,"qdrant":6333},"version":"1.0.0"}

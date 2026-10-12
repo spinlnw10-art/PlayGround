@@ -1,0 +1,1 @@
+{"embeddingsProvider":{"model":"nomic-embed-text","provider":"ollama"},"models":[{"apiBase":"http://127.0.0.1:11434","model":"llama3.2:3b","provider":"ollama","title":"Ollama Llama 3.2"}],"tabAutocompleteModel":{"model":"qwen2.5-coder:1.5b","provider":"ollama","title":"Qwen Coder"}}
