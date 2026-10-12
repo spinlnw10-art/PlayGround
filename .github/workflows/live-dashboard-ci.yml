@@ -1,0 +1,30 @@
+name: Live Dashboard CI
+
+on:
+  pull_request:
+    paths:
+      - "live-dashboard/**"
+      - ".github/workflows/live-dashboard-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Extract inline JavaScript
+        run: |
+          node -e "const fs=require('node:fs'); const html=fs.readFileSync('live-dashboard/index.html','utf8'); const match=html.match(/<script>([\\s\\S]*?)<\\/script>/); if(!match) throw new Error('Inline application script not found'); fs.writeFileSync('/tmp/live-dashboard.js',match[1]);"
+      - name: Validate JavaScript syntax
+        run: node --check /tmp/live-dashboard.js
+      - name: Check expected read-only API endpoints and refresh interval
+        run: |
+          grep -q 'actions/runs?per_page=10' live-dashboard/index.html
+          grep -q 'setInterval(loadAll,15000)' live-dashboard/index.html
+          grep -q 'NO TOKENS IN BROWSER' live-dashboard/index.html
